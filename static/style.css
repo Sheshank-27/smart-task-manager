@@ -3,12 +3,7 @@ body{
     margin:0;
     padding:0;
 
-    background:red(
-        135deg,
-        #6cda17,
-        #209399,
-        #00cec9
-    );
+    background:red;
 
     font-family:Arial;
     min-height:100vh;
