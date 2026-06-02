@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Smart Task Manager</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚀 Smart Task Manager</h1>
+
+    <form action="/add" method="POST">
+
+        <input
+            type="text"
+            name="task"
+            placeholder="Enter New Task"
+            required>
+
+        <select name="priority">
+
+            <option value="High">High</option>
+
+            <option value="Medium">Medium</option>
+
+            <option value="Low">Low</option>
+
+        </select>
+
+        <button type="submit">
+            Add Task
+        </button>
+
+    </form>
+
+    {% for task in tasks %}
+
+    <div class="task-card">
+
+        <h3>{{ task.name }}</h3>
+
+        <p>
+            Priority:
+            <span class="{{ task.priority }}">
+                {{ task.priority }}
+            </span>
+        </p>
+
+        <p>
+            Status:
+            <span class="{{ task.status }}">
+                {{ task.status }}
+            </span>
+        </p>
+
+        <a href="/complete/{{ loop.index0 }}">
+            ✅ Complete
+        </a>
+
+        <a href="/delete/{{ loop.index0 }}">
+            ❌ Delete
+        </a>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
