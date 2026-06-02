@@ -1,0 +1,50 @@
+name: Deploy to ECS
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AWS_REGION: ap-south-1
+  ECR_REPOSITORY: smart-task-manager
+  ECS_SERVICE: smart-task-manager-task2-service
+  ECS_CLUSTER: smart-task-cluster
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t smart-task-manager .
+
+      - name: Tag Docker image
+        run: |
+          docker tag smart-task-manager:latest 881490100241.dkr.ecr.ap-south-1.amazonaws.com/smart-task-manager:latest
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push 881490100241.dkr.ecr.ap-south-1.amazonaws.com/smart-task-manager:latest
+
+      - name: Force new ECS deployment
+        run: |
+          aws ecs update-service \
+          --cluster smart-task-cluster \
+          --service smart-task-manager-task2-service \
+          --force-new-deployment
