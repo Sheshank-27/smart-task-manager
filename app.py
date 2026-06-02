@@ -31,6 +31,22 @@ def complete_task(index):
 
     return redirect('/')
 
+@app.route('/edit/<int:index>', methods=['GET', 'POST'])
+def edit_task(index):
+
+    if request.method == 'POST':
+
+        tasks[index]["name"] = request.form['task']
+        tasks[index]["priority"] = request.form['priority']
+
+        return redirect('/')
+
+    return render_template(
+        'edit.html',
+        task=tasks[index],
+        index=index
+    )
+
 @app.route('/delete/<int:index>')
 def delete_task(index):
 
