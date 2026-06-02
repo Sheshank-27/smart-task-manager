@@ -102,13 +102,13 @@ button{
 
 .Pending{
 
-    color:orange;
+    color:black;
     font-weight:bold;
 }
 
 .Completed{
 
-    color:green;
+    color:yellow;
     font-weight:bold;
 }
 
