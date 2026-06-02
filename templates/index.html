@@ -33,6 +33,16 @@
 
         </select>
 
+         <select name="type">
+
+            <option value="General">General</option>
+
+            <option value="Bug">Bug</option>
+
+            <option value="Hotfix">Hotfix</option>
+
+        </select>
+
         <button type="submit">
             Add Task
         </button>
@@ -56,6 +66,13 @@
             Status:
             <span class="{{ task.status }}">
                 {{ task.status }}
+            </span>
+        </p>
+
+         <p>
+            Status:
+            <span class="{{ task.type }}">
+                {{ task.type }}
             </span>
         </p>
 
